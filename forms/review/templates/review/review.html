@@ -1,11 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FeedBack</title>
+    <title>FeedBack app</title>
+    <link rel='stylesheet' href="{% static "review/styles.css" %}"/>
   </head>
   <body>
-    
+    <form action="/" method="POST">
+      {% csrf_token %} 
+      {% if has_error %}
+      <p>This form in not valid enter a validaition, please</p>
+      {% endif %} 
+      
+      {% for field  in form %}
+      <div class="form-control {% if form.user_name.errors %}errors{% endif %}">
+        {{field.label_tag}}
+        {{field}}
+        {{field.errors}}
+      </div>
+     {% endfor %}
+      <button type="submit">Send</button>
+    </form>
   </body>
 </html>
